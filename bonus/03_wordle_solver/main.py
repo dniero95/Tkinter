@@ -1,6 +1,8 @@
 # sviluppo l'algoritmo per filtrare le parole
 import re
 
+# TODO: connect with a mysql db
+
 if __name__ == '__main__':
     words_list = ['abito',
                   'aceto',
@@ -480,10 +482,13 @@ if __name__ == '__main__':
 
     # TODO: add check for letter in random position
 
-    # letter_random_pos = input('Inserisci lettere presenti in posizione random ').replace("_", ".")
-    # while (len(letter_random_pos) != 5):
-    #     print('Numero di caratteri errato! Inserire nuovamente la stringa')
-    #     letter_random_pos = input('Inserisci lettere assenti: ').replace("_", ".")
+    letter_random_pos = input('Inserisci lettere presenti in posizione random ').replace("_", ".")
+    while (len(letter_random_pos) != 5):
+        print('Numero di caratteri errato! Inserire nuovamente la stringa')
+        letter_random_pos = input('Inserisci lettere assenti: ').replace("_", ".")
+
+    letter_random_pos_re = f'[{letter_random_pos.replace(".", "")}]'
+
 
     letter_def_pos = input('Inserisci lettere presenti in posizione definita: ').replace("_", ".")
     while (len(letter_def_pos) != 5):
@@ -499,6 +504,12 @@ if __name__ == '__main__':
     # Per leggere la lista al contrario
     for i in range(len(words_list)-1, -1, -1):
         if bool(re.match(absent_letter, words_list[i])) and absent_letter != '.....':
+            print(f'Rimuovo: {words_list[i]}')
+            words_list.remove(words_list[i])
+        elif bool(re.match(letter_random_pos, words_list[i])) and letter_random_pos != '.....':
+            print(f'Rimuovo: {words_list[i]}')
+            words_list.remove(words_list[i])
+        elif bool(re.match(letter_random_pos_re, words_list[i])):
             print(f'Rimuovo: {words_list[i]}')
             words_list.remove(words_list[i])
         elif not bool(re.match(letter_def_pos, words_list[i])):
